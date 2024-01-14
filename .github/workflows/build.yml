@@ -30,13 +30,9 @@ jobs:
             git checkout main
           fi
 
-          ls -al ../dist/
-
           # Remove todos os arquivos na branch main
           git checkout main
           git rm -rf .
-
-
 
           # Adiciona os arquivos necessários
           cp -r ../dist/* .

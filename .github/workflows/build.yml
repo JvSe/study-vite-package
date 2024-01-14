@@ -53,14 +53,18 @@ jobs:
             git checkout main
           fi
 
+          ls -al ../dist/
+
           # Remove todos os arquivos na branch main
           git checkout main
           git rm -rf .
 
+
+
           # Adiciona os arquivos necessários
           cp -r dist/* .
           cp package.json .
-          cp readme.md .
+          cp READEME.md .
 
           # Commit e push das alterações
           git add .

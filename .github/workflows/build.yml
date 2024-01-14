@@ -32,7 +32,7 @@ jobs:
 
           # Remove todos os arquivos na branch main
           git checkout main
-          git find . -type f -not \( -name 'dist' -o -name 'package.json' -o -name 'readme.md' \) -exec rm -f {} +
+          git rm -rf lib public src .eslint.cjs .nvmrc components.json index.html pnpm-lock.yaml postcss.config.js tailwind.config.ts tsconfig-build.json tsconfig.json tsconfig.node.json vite.config.ts
 
           # Commit e push das alterações
           git add .

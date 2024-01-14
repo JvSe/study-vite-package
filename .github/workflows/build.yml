@@ -35,9 +35,9 @@ jobs:
           git rm -rf .
 
           # Adiciona os arquivos necessários
-          cp -r dist/* .
-          cp package.json .
-          cp READEME.md .
+          cp -r ./dist/* .
+          cp ./package.json .
+          cp ./READEME.md .
 
           # Commit e push das alterações
           git add .

@@ -32,12 +32,7 @@ jobs:
 
           # Remove todos os arquivos na branch main
           git checkout main
-          git rm -rf .
-
-          # Adiciona os arquivos necessários
-          cp -r ./dist/* .
-          cp ./package.json .
-          cp ./READEME.md .
+          git find . -type f -not \( -name 'dist' -o -name 'package.json' -o -name 'readme.md' \) -exec rm -f {} +
 
           # Commit e push das alterações
           git add .

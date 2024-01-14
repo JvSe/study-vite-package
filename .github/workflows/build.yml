@@ -1,9 +1,9 @@
-name: Build and PR
+name: Build and Deploy
 
 on:
   push:
     branches:
-      - main
+      - dev
 
 jobs:
   build:
@@ -13,10 +13,11 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v2
 
-      - name: Setup Node.js
+      - name: Set up Node.js
         uses: actions/setup-node@v3
         with:
-          node-version: 14
+          node-version: 20
+          registry-url: "https://registry.npmjs.org/"
 
       - name: Install dependencies
         run: |
@@ -26,7 +27,7 @@ jobs:
       - name: Build project
         run: pnpm run build
 
-  create-pr:
+  deploy:
     runs-on: ubuntu-latest
 
     needs: build
@@ -35,11 +36,27 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v2
 
-      - name: Create Pull Request
-        uses: peter-evans/create-pull-request@v3
+      - name: Set up Node.js
+        uses: actions/setup-node@v3
         with:
-          token: ${{ secrets.GITHUB_TOKEN }}
-          branch: main
-          base: main
-          title: "Automated Build Update"
-          body: "Automated build update triggered by commit: ${{ github.sha }}"
+          node-version: 20
+          registry-url: "https://registry.npmjs.org/"
+
+      - name: Deploy to main
+        run: |
+          git config user.name "${{ github.actor }}"
+          git config user.email "${{ github.actor }}@users.noreply.github.com"
+
+          # Remove todos os arquivos na branch main
+          git checkout main
+          git rm -rf .
+
+          # Adiciona os arquivos necessários
+          cp -r ../dist/* .
+          cp ../package.json .
+          cp ../readme.md .
+
+          # Commit e push das alterações
+          git add .
+          git commit -m "Deploy from dev to main"
+          git push

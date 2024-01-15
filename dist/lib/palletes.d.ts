@@ -1,0 +1,57 @@
+export declare const themes: {
+    "nextmed-admin": {
+        primary: string;
+        primary1: string;
+        primary2: string;
+        "primary-1": string;
+        "primary-2": string;
+        "primary-dark": string;
+        "primary-border": string;
+        "primary-hover": string;
+        "primary-alpha": string;
+        secondary: string;
+        "secondary+1": string;
+        "secondary-1": string;
+        "secondary-2": string;
+        dark: string;
+        "dark-1": string;
+        "dark-2": string;
+        "dark-3": string;
+        "dark-4": string;
+        "dark-5": string;
+    };
+    "nextmed-institutions": {
+        primary: string;
+        primary1: string;
+        primary2: string;
+        "primary-1": string;
+        "primary-2": string;
+        "primary-dark": string;
+        "primary-border": string;
+        "primary-hover": string;
+        "primary-alpha": string;
+        dark: string;
+        "dark-1": string;
+        "dark-2": string;
+        "dark-3": string;
+        "dark-4": string;
+        "dark-5": string;
+    };
+    "nextmed-app": {
+        primary: string;
+        primary1: string;
+        primary2: string;
+        "primary-1": string;
+        "primary-2": string;
+        "primary-dark": string;
+        "primary-border": string;
+        "primary-hover": string;
+        "primary-alpha": string;
+        dark: string;
+        "dark-1": string;
+        "dark-2": string;
+        "dark-3": string;
+        "dark-4": string;
+        "dark-5": string;
+    };
+};

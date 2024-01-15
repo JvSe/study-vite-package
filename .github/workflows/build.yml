@@ -1,4 +1,4 @@
-name: Build and Deploy
+name: Build and Publish Package
 
 on:
   push:
@@ -6,38 +6,53 @@ on:
       - dev
 
 jobs:
-  deploy:
+  build:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Checkout repository
+      - name: Checkout Repository
         uses: actions/checkout@v2
 
       - name: Set up Node.js
-        uses: actions/setup-node@v3
+        uses: actions/setup-node@v2
         with:
-          node-version: 20
-          registry-url: "https://registry.npmjs.org/"
+          node-version: "14"
 
-      - name: Deploy to main
+      - name: Install Dependencies
+        run: npm install
+
+      - name: Build Project
+        run: npm run build
+
+      - name: Copy Artifacts
         run: |
-          git config user.name "${{ github.actor }}"
-          git config user.email "${{ github.actor }}@users.noreply.github.com"
-          git config pull.rebase true
+          mkdir -p dist-package
+          cp -R dist dist-package
+          cp package.json dist-package
+          cp README.md dist-package
 
-          if ! git show-ref --quiet refs/heads/main; then
-            git checkout -b main
-          else
-            git checkout main
-          fi
+      - name: Publish Artifact
+        uses: actions/upload-artifact@v2
+        with:
+          name: dist-package
+          path: dist-package
 
-          # Remove todos os arquivos na branch main
-          git rm -rf .github .gitignore lib public src .nvmrc .eslintrc.cjs components.json index.html pnpm-lock.yaml postcss.config.js tailwind.config.ts tsconfig-build.json tsconfig.json tsconfig.node.json vite.config.ts
+  copy-to-main:
+    needs: build
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v2
 
-          # Commit e push das alterações
+      - name: Download Artifact
+        uses: actions/download-artifact@v2
+        with:
+          name: dist-package
+
+      - name: Push to Main
+        run: |
+          git checkout main
+          cp -R dist-package/* .
           git add .
-          git commit -m "Deploy from dev to main"
-          git pull origin main
-          git push --set-upstream -f origin main
-        env:
-          GITHUB_TOKEN: ${{secrets.GITHUB_TOKEN}}
+          git commit -m "Update artifacts from dev"
+          git push

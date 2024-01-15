@@ -37,7 +37,7 @@ jobs:
           # Commit e push das alterações
           git add .
           git commit -m "Deploy from dev to main"
-          git pull
+          git pull origin main
           git push --set-upstream origin main
         env:
           GITHUB_TOKEN: ${{secrets.GITHUB_TOKEN}}

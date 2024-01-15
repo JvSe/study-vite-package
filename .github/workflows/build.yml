@@ -34,6 +34,7 @@ jobs:
           # Commit e push das alterações
           git add .
           git commit -m "Clear main"
+          git pull origin main
           git push --set-upstream origin main
         env:
           GITHUB_TOKEN: ${{secrets.GITHUB_TOKEN}}

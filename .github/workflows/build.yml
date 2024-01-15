@@ -24,7 +24,11 @@ jobs:
           git config user.email "${{ github.actor }}@users.noreply.github.com"
 
           # Remove todos os arquivos na branch main
-          git checkout main
+          if ! git show-ref --quiet refs/heads/main; then
+            git checkout -b main
+          else
+            git checkout main
+          fi
           git rm -rf .
 
           # Commit e push das alterações

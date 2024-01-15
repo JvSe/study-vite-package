@@ -1,17 +1,11 @@
 import react from "@vitejs/plugin-react";
 import { resolve } from "path";
-import tailwindcss from "tailwindcss";
 import { defineConfig } from "vite";
 import dts from "vite-plugin-dts";
 
 // https://vitejs.dev/config/
 export default defineConfig({
   plugins: [react(), dts({ include: ["lib"] })],
-  css: {
-    postcss: {
-      plugins: [tailwindcss],
-    },
-  },
   resolve: {
     alias: {
       "@": resolve(__dirname, "./lib"),
@@ -30,7 +24,6 @@ export default defineConfig({
       formats: ["es"],
       name: "nextmed-theme2",
       fileName: (format, entryName) => {
-        console.log(entryName);
         return `${entryName ? entryName + "/" : ""}index.${format}.js`;
       },
     },

@@ -1,35 +1,39 @@
 {
   "name": "nextmed-theme2",
-  "private": false,
-  "version": "0.0.0",
+  "private": true,
+  "version": "0.0.1",
   "type": "module",
   "main": "dist/nextmed-theme2.js",
   "types": "dist/main.d.ts",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/JvSe/study-vite-package"
+  },
   "files": [
     "dist"
   ],
   "exports": {
     "./components": {
-      "import": "./dist/components/index.es.js",
-      "types": "./dist/components/index.d.ts"
+      "import": "dist/components/index.es.js",
+      "types": "dist/components/index.d.ts"
     },
     "./form-validations": {
-      "import": "./dist/lib/form-validations/index.es.js",
-      "types": "./dist/lib/form-validations/index.d.ts"
+      "import": "dist/lib/form-validations/index.es.js",
+      "types": "dist/lib/form-validations/index.d.ts"
     },
     "./context": {
-      "import": "./dist/context/index.es.js",
-      "types": "./dist/context/index.d.ts"
+      "import": "dist/context/index.es.js",
+      "types": "dist/context/index.d.ts"
     },
     "./icons": {
-      "import": "./dist/icons/index.es.js",
-      "types": "./dist/icons/index.d.ts"
+      "import": "dist/icons/index.es.js",
+      "types": "dist/icons/index.d.ts"
     },
     "./lib": {
-      "import": "./dist/lib/index.es.js",
-      "types": "./dist/lib/index.d.ts"
+      "import": "dist/lib/index.es.js",
+      "types": "dist/lib/index.d.ts"
     },
-    "./style.css": "./dist/style.css"
+    "./style.css": "dist/style.css"
   },
   "typesVersions": {
     "*": {

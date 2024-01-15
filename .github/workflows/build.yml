@@ -31,8 +31,6 @@ jobs:
             git checkout main
           fi
 
-          git rm -rf .
-
           # Remove todos os arquivos na branch main
           git checkout main
           git rm -rf .github lib public src .gitignore .nvmrc .eslintrc.cjs components.json index.html pnpm-lock.yaml postcss.config.js tailwind.config.ts tsconfig-build.json tsconfig.json tsconfig.node.json vite.config.ts
@@ -41,6 +39,6 @@ jobs:
           git add .
           git commit -m "Deploy from dev to main"
           git pull origin main
-          git push --set-upstream origin main
+          git push -f --set-upstream origin main
         env:
           GITHUB_TOKEN: ${{secrets.GITHUB_TOKEN}}

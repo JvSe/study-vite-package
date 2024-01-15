@@ -31,6 +31,13 @@
     },
     "./style.css": "./dist/style.css"
   },
+  "typesVersions": {
+    "*": {
+      "*": [
+        "./dist/*"
+      ]
+    }
+  },
   "scripts": {
     "dev": "vite",
     "build": "rm -rf dist && tsc --p ./tsconfig-build.json && vite build",

@@ -1,4 +1,4 @@
-name: Build and Publish Package
+name: Build and Deploy
 
 on:
   push:
@@ -6,55 +6,38 @@ on:
       - dev
 
 jobs:
-  build:
+  deploy:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Checkout Repository
+      - name: Checkout repository
         uses: actions/checkout@v2
 
       - name: Set up Node.js
-        uses: actions/setup-node@v2
+        uses: actions/setup-node@v3
         with:
           node-version: 20
+          registry-url: "https://registry.npmjs.org/"
 
-      - name: Install Dependencies
+      - name: Deploy to main
         run: |
-          npm install -g pnpm
-          pnpm install
+          git config user.name "${{ github.actor }}"
+          git config user.email "${{ github.actor }}@users.noreply.github.com"
+          git config pull.rebase true
 
-      - name: Build Project
-        run: pnpm build
+          if ! git show-ref --quiet refs/heads/main; then
+            git checkout -b main
+          else
+            git checkout main
+          fi
 
-      - name: Copy Artifacts
-        run: |
-          mkdir -p dist-package
-          cp -R dist dist-package
-          cp package.json dist-package
-          cp README.md dist-package
+          # Remove todos os arquivos na branch main
+          git rm -rf .github .gitignore lib public src .nvmrc .eslintrc.cjs components.json index.html pnpm-lock.yaml postcss.config.js tailwind.config.ts tsconfig-build.json tsconfig.json tsconfig.node.json vite.config.ts
 
-      - name: Publish Artifact
-        uses: actions/upload-artifact@v2
-        with:
-          name: dist-package
-          path: dist-package
-
-  copy-to-main:
-    needs: build
-    runs-on: ubuntu-latest
-    steps:
-      - name: Checkout Repository
-        uses: actions/checkout@v2
-
-      - name: Download Artifact
-        uses: actions/download-artifact@v2
-        with:
-          name: dist-package
-
-      - name: Push to Main
-        run: |
-          git checkout main
-          cp -R dist-package/* .
+          # Commit e push das alterações
           git add .
-          git commit -m "Update artifacts from dev"
-          git push
+          git commit -m "Deploy from dev to main"
+          git pull origin main
+          git push --set-upstream -f origin main
+        env:
+          GITHUB_TOKEN: ${{secrets.GITHUB_TOKEN}}

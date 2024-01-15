@@ -33,7 +33,7 @@ jobs:
 
           # Remove todos os arquivos na branch main
           git checkout main
-          git rm -rf lib public src  components.json index.html pnpm-lock.yaml postcss.config.js tailwind.config.ts tsconfig-build.json tsconfig.json tsconfig.node.json vite.config.ts
+          git rm -rf lib public src .gitignore .eslintrc.cjs components.json index.html pnpm-lock.yaml postcss.config.js tailwind.config.ts tsconfig-build.json tsconfig.json tsconfig.node.json vite.config.ts
 
           # Commit e push das alterações
           git add .

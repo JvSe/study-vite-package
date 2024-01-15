@@ -38,6 +38,6 @@ jobs:
           git add .
           git commit -m "Deploy from dev to main"
           git pull origin main
-          git push --set-upstream origin main
+          git push --set-upstream -f origin main
         env:
           GITHUB_TOKEN: ${{secrets.GITHUB_TOKEN}}

@@ -6,8 +6,45 @@ on:
       - dev
 
 jobs:
+  clear:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v2
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: 20
+          registry-url: "https://registry.npmjs.org/"
+
+      - name: Clear main
+        run: |
+          git config user.name "${{ github.actor }}"
+          git config user.email "${{ github.actor }}@users.noreply.github.com"
+          git config pull.rebase true
+
+          if ! git show-ref --quiet refs/heads/main; then
+            git checkout -b main
+          else
+            git checkout main
+          fi
+
+          # Remove todos os arquivos na branch main
+          git rm -rf .
+
+          # Commit e push das alterações
+          git add .
+          git commit -m "Clear main"
+          git pull origin main
+          git push --set-upstream origin main
+        env:
+          GITHUB_TOKEN: ${{secrets.GITHUB_TOKEN}}
+
   deploy:
     runs-on: ubuntu-latest
+
+    needs: clear
 
     steps:
       - name: Checkout repository
